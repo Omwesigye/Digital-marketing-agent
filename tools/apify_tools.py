@@ -281,23 +281,75 @@ class ApifyTools:
     @disk_cache(ttl_hours=3)
     def fetch_weather(self, city="Kampala") -> WeatherData:
         try:
-            response = requests.get(
-                "https://api.weatherapi.com/v1/current.json",
-                params={
-                    "key": os.getenv("WEATHER_API_KEY"),
-                    "q": city
-                },
-                timeout=20
-            )
-            response.raise_for_status()
-            data = response.json()
+            # Check if user provided a custom Open-Meteo URL in .env
+            custom_url = os.getenv("WEATHER_API_URL")
+            
+            if custom_url:
+                weather_resp = requests.get(custom_url, timeout=15)
+                weather_resp.raise_for_status()
+                data = weather_resp.json()
+            else:
+                # 1. Geocode the city to get Latitude and Longitude
+                geo_resp = requests.get(
+                    "https://geocoding-api.open-meteo.com/v1/search",
+                    params={"name": city, "count": 1},
+                    timeout=15
+                )
+                geo_resp.raise_for_status()
+                geo_data = geo_resp.json()
+                
+                if not geo_data.get("results"):
+                    raise ValueError(f"City '{city}' not found.")
+                    
+                lat = geo_data["results"][0]["latitude"]
+                lon = geo_data["results"][0]["longitude"]
+
+                # 2. Fetch the current weather using Open-Meteo
+                weather_resp = requests.get(
+                    "https://api.open-meteo.com/v1/forecast",
+                    params={
+                        "latitude": lat,
+                        "longitude": lon,
+                        "current": "temperature_2m,relative_humidity_2m,weather_code"
+                    },
+                    timeout=15
+                )
+                weather_resp.raise_for_status()
+                data = weather_resp.json()
+            
+            # Extract data safely (handles both 'current' and 'hourly' formats from Open-Meteo)
+            if "current" in data:
+                temp = float(data["current"].get("temperature_2m", 0))
+                humidity = float(data["current"].get("relative_humidity_2m", 0))
+                wcode = data["current"].get("weather_code", 0)
+            elif "hourly" in data:
+                # Fallback if the user explicitly used 'hourly' in their custom .env URL
+                temp = float(data["hourly"].get("temperature_2m", [0])[0])
+                humidity = float(data["hourly"].get("relative_humidity_2m", [0])[0]) if "relative_humidity_2m" in data["hourly"] else 0.0
+                wcode = data["hourly"].get("weather_code", [0])[0] if "weather_code" in data["hourly"] else 0
+            else:
+                raise ValueError("Unrecognized Open-Meteo JSON structure.")
+
+            # Simplified WMO weather code mapping
+            if wcode <= 1:
+                condition = "Clear"
+            elif wcode <= 3:
+                condition = "Cloudy"
+            elif wcode <= 49:
+                condition = "Foggy"
+            elif wcode <= 69:
+                condition = "Rain"
+            elif wcode <= 79:
+                condition = "Snow"
+            else:
+                condition = "Stormy"
 
             return WeatherData(
                 platform="weather",
                 city=city,
-                temperature=float(data["current"]["temp_c"]),
-                condition=data["current"]["condition"]["text"],
-                humidity=float(data["current"]["humidity"])
+                temperature=temp,
+                condition=condition,
+                humidity=humidity
             )
         except Exception as e:
             print(f"[Weather] {e}")
