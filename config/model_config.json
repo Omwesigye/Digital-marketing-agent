@@ -1,0 +1,26 @@
+[
+  {
+    "config_name": "gemini_config",
+    "model_type": "gemini_chat",
+    "model_name": "gemini-2.5-flash",
+    "api_key": "${GEMINI_API_KEY}"
+  },
+  {
+    "config_name": "claude_config",
+    "model_type": "anthropic_chat",
+    "model_name": "claude-3-5-sonnet-20241022",
+    "api_key": "${ANTHROPIC_API_KEY}"
+  },
+  {
+    "config_name": "ollama_config",
+    "model_type": "ollama_chat",
+    "model_name": "llama3",
+    "base_url": "http://localhost:11434"
+  },
+  {
+    "config_name": "openai_config",
+    "model_type": "openai_chat",
+    "model_name": "gpt-4o-mini",
+    "api_key": "${OPENAI_API_KEY}"
+  }
+]

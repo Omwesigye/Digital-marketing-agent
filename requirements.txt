@@ -1,0 +1,40 @@
+# Core Framework
+agentscope==0.0.4
+
+# LLM
+openai
+
+# Data Collection
+apify-client
+pytrends
+feedparser
+requests
+
+# Data Processing
+pandas
+pydantic
+
+# Sentiment Analysis
+textblob
+vaderSentiment
+
+# Database
+supabase
+psycopg2-binary
+
+# Email
+resend
+
+# Utilities
+python-dotenv
+schedule
+rich
+tenacity
+
+# Testing
+pytest
+pytest-asyncio
+
+fastapi
+uvicorn
+uvicorn
