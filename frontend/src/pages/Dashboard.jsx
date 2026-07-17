@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography, Grid } from '@mui/material';
+import { Typography, Grid, Box } from '@mui/material';
 import MainLayout from '../components/layout/MainLayout';
 import InsightCard from '../components/dashboard/InsightCard';
 import DraftApproval from '../components/dashboard/DraftApproval';
