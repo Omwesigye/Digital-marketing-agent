@@ -49,8 +49,8 @@ class SupabaseService:
         inserted_ids = []
         for sig in signals:
             try:
-                # Convert model to dict, exclude None keys that database generates
-                data = sig.dict(exclude_none=True) if hasattr(sig, "dict") else sig
+                # Convert model to dict, serialize datetimes via mode='json'
+                data = sig.model_dump(mode='json', exclude_none=True) if hasattr(sig, "model_dump") else sig
                 result = self.client.table("raw_signals").insert(data).execute()
                 if result.data:
                     inserted_ids.append(result.data[0]["id"])
@@ -64,7 +64,7 @@ class SupabaseService:
             return
         for res in results:
             try:
-                data = res.dict(exclude_none=True) if hasattr(res, "dict") else res
+                data = res.model_dump(mode='json', exclude_none=True) if hasattr(res, "model_dump") else res
                 self.client.table("sentiment_results").insert(data).execute()
             except Exception as e:
                 logger.error(f"Failed to insert sentiment result: {e}")
@@ -74,7 +74,7 @@ class SupabaseService:
         if not self.is_available():
             return
         try:
-            data = insight.dict(exclude_none=True) if hasattr(insight, "dict") else insight
+            data = insight.model_dump(mode='json', exclude_none=True) if hasattr(insight, "model_dump") else insight
             self.client.table("competitor_insights").insert(data).execute()
         except Exception as e:
             logger.error(f"Failed to insert competitor insight: {e}")
@@ -84,7 +84,7 @@ class SupabaseService:
         if not self.is_available():
             return "mock-insight-id"
         try:
-            data = insight.dict(exclude_none=True) if hasattr(insight, "dict") else insight
+            data = insight.model_dump(mode='json', exclude_none=True) if hasattr(insight, "model_dump") else insight
             result = self.client.table("insights").insert(data).execute()
             if result.data:
                 return result.data[0]["id"]
@@ -97,7 +97,7 @@ class SupabaseService:
         if not self.is_available():
             return "mock-content-id"
         try:
-            data = content.dict(exclude_none=True) if hasattr(content, "dict") else content
+            data = content.model_dump(mode='json', exclude_none=True) if hasattr(content, "model_dump") else content
             result = self.client.table("content_library").insert(data).execute()
             if result.data:
                 return result.data[0]["id"]
@@ -110,7 +110,7 @@ class SupabaseService:
         if not self.is_available():
             return "mock-campaign-id"
         try:
-            data = campaign.dict(exclude_none=True) if hasattr(campaign, "dict") else campaign
+            data = campaign.model_dump(mode='json', exclude_none=True) if hasattr(campaign, "model_dump") else campaign
             result = self.client.table("campaigns").insert(data).execute()
             if result.data:
                 return result.data[0]["id"]
@@ -182,7 +182,7 @@ class SupabaseService:
         if not self.is_available():
             return
         try:
-            data = email_send.dict(exclude_none=True) if hasattr(email_send, "dict") else email_send
+            data = email_send.model_dump(mode='json', exclude_none=True) if hasattr(email_send, "model_dump") else email_send
             self.client.table("email_sends").insert(data).execute()
         except Exception as e:
             logger.error(f"Failed to record email send: {e}")
