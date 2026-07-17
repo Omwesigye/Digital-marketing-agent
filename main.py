@@ -80,15 +80,7 @@ def main():
 
     args = parser.parse_args()
 
-    if args.mode == "api":
-        host = os.getenv("HOST", "0.0.0.0")
-        port = int(os.getenv("PORT", args.port))
-        logger.info(f"Starting web dashboard API server on http://{host}:{port}")
-        # Note: We pass the application reference as a string sequence to safely support hot-reloading
-        uvicorn.run("main:app", host=host, port=port, reload=True)
-        return
-
-    # Initialize AgentScope models (Only runs if running in an explicit CLI workflow)
+    # Initialize AgentScope models
     config_path = os.path.join("config", "model_config.json")
     try:
         logger.info(f"Initializing AgentScope with configurations from: {config_path}")
@@ -96,6 +88,14 @@ def main():
     except Exception as e:
         logger.error(f"Failed to initialize AgentScope: {e}")
         logger.warning("Proceeding without full LLM capabilities (fallback rule-based mode will be used).")
+
+    if args.mode == "api":
+        host = os.getenv("HOST", "0.0.0.0")
+        port = int(os.getenv("PORT", args.port))
+        logger.info(f"Starting web dashboard API server on http://{host}:{port}")
+        # Note: We pass the application reference as a string sequence to safely support hot-reloading
+        uvicorn.run("main:app", host=host, port=port, reload=True)
+        return
 
     # Run correct CLI mode workflow
     if args.mode == "listen":
