@@ -5,10 +5,10 @@ import { getDesignTokens } from './theme';
 export const ColorModeContext = createContext({ toggleColorMode: () => {} });
 
 export const ColorModeProvider = ({ children }) => {
-  // Check local storage or system preference, default to dark
+  // Check local storage or system preference, default to light
   const [mode, setMode] = useState(() => {
     const saved = localStorage.getItem('themeMode');
-    return saved || 'dark';
+    return saved || 'light';
   });
 
   const colorMode = useMemo(
