@@ -25,8 +25,22 @@ from api.routes import router as api_router
 
 logger = get_logger("main")
 
+from contextlib import asynccontextmanager
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Initialize AgentScope models globally when the FastAPI worker boots up
+    config_path = os.path.join("config", "model_config.json")
+    try:
+        logger.info(f"FastAPI Startup: Initializing AgentScope with configurations from {config_path}")
+        agentscope.init(model_configs=config_path)
+    except Exception as e:
+        logger.error(f"Failed to initialize AgentScope during startup: {e}")
+        logger.warning("Proceeding without full LLM capabilities (fallback rule-based mode will be used).")
+    yield
+
 # Initialize the FastAPI App instance
-app = FastAPI(title="Digital Marketing Assistant API")
+app = FastAPI(title="Digital Marketing Assistant API", lifespan=lifespan)
 
 # Configure CORS middleware for local frontend cross-origin requests
 app.add_middleware(

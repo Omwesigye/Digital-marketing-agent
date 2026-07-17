@@ -17,6 +17,14 @@ def run_full_listening_and_insights_pipeline(model_config: str = "gemini_config"
     logger.info("STARTING MASTER RESTAURANT AGENT RUN")
     logger.info("========================================")
 
+    import agentscope
+    import os
+    config_path = os.path.join("config", "model_config.json")
+    try:
+        agentscope.init(model_configs=config_path)
+    except Exception:
+        pass
+
     # 1. Listen & Ingest
     logger.info("--- Phase 2: Ingesting Signals ---")
     signal_ids = run_listening_pipeline()
