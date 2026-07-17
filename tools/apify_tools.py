@@ -70,7 +70,8 @@ class ApifyTools:
             )
 
             cleaned_records = []
-            for item in self.client.dataset(run["defaultDatasetId"]).iterate_items():
+            dataset_id = run["defaultDatasetId"] if isinstance(run, dict) else run.default_dataset_id
+            for item in self.client.dataset(dataset_id).iterate_items():
                 parsed_content = self._normalize_text(item.get("text", ""))
                 if not parsed_content:
                     continue
@@ -110,7 +111,8 @@ class ApifyTools:
             )
 
             cleaned_records = []
-            for item in self.client.dataset(run["defaultDatasetId"]).iterate_items():
+            dataset_id = run["defaultDatasetId"] if isinstance(run, dict) else run.default_dataset_id
+            for item in self.client.dataset(dataset_id).iterate_items():
                 parsed_content = self._normalize_text(item.get("text", ""))
                 if not parsed_content:
                     continue
@@ -151,7 +153,8 @@ class ApifyTools:
             )
 
             posts = []
-            for item in self.client.dataset(run["defaultDatasetId"]).iterate_items():
+            dataset_id = run["defaultDatasetId"] if isinstance(run, dict) else run.default_dataset_id
+            for item in self.client.dataset(dataset_id).iterate_items():
                 text = self._normalize_text(item.get("caption", ""))
                 if not text:
                     continue
@@ -192,7 +195,8 @@ class ApifyTools:
             )
 
             cleaned_reviews = []
-            for item in self.client.dataset(run["defaultDatasetId"]).iterate_items():
+            dataset_id = run["defaultDatasetId"] if isinstance(run, dict) else run.default_dataset_id
+            for item in self.client.dataset(dataset_id).iterate_items():
                 reviews = item.get("reviews", [])
                 competitor_name = item.get("title", search_term)
 
