@@ -1,6 +1,6 @@
 import React from 'react';
 import { Paper, BottomNavigation, BottomNavigationAction } from '@mui/material';
-import DashboardIcon from '@mui/icons-material/Dashboard';
+import HomeIcon from '@mui/icons-material/Home';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import AutorenewIcon from '@mui/icons-material/Autorenew';
 import PersonIcon from '@mui/icons-material/Person';
@@ -34,7 +34,7 @@ export default function BottomBar() {
           borderTop: '1px solid rgba(255, 255, 255, 0.1)'
         }}
       >
-        <BottomNavigationAction label="Home" icon={<DashboardIcon />} />
+        <BottomNavigationAction label="Home" icon={<HomeIcon />} />
         <BottomNavigationAction label="Insights" icon={<TrendingUpIcon />} />
         <BottomNavigationAction label="Retention" icon={<AutorenewIcon />} />
         <BottomNavigationAction label="Profile" icon={<PersonIcon />} />

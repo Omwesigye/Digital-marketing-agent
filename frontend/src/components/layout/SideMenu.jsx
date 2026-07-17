@@ -1,6 +1,6 @@
 import React from 'react';
 import { Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar, Box } from '@mui/material';
-import DashboardIcon from '@mui/icons-material/Dashboard';
+import HomeIcon from '@mui/icons-material/Home';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import QueryStatsIcon from '@mui/icons-material/QueryStats';
 import MoodIcon from '@mui/icons-material/Mood';
@@ -12,7 +12,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 const drawerWidth = 240;
 
 const menuItems = [
-  { text: 'Dashboard', icon: <DashboardIcon />, path: '/dashboard' },
+  { text: 'Dashboard', icon: <HomeIcon />, path: '/dashboard' },
   { text: 'Insights', icon: <TrendingUpIcon />, path: '/insights' },
   { text: 'Competitor Intel', icon: <QueryStatsIcon />, path: '/competitor' },
   { text: 'Sentiment', icon: <MoodIcon />, path: '/sentiment' },

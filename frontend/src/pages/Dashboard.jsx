@@ -15,29 +15,41 @@ export default function Dashboard() {
         Dashboard Overview
       </Typography>
       
-      <Grid container spacing={3} sx={{ mt: 1 }}>
-        <Grid item xs={12} md={4}>
-          <PipelineTrigger />
+      <Grid container spacing={3} sx={{ mt: 1, alignItems: 'stretch' }}>
+        <Grid item xs={12} sm={6} lg={4} sx={{ display: 'flex' }}>
+          <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', '& > *': { flexGrow: 1, height: '100%' } }}>
+            <PipelineTrigger />
+          </Box>
         </Grid>
         
-        <Grid item xs={12} md={8}>
-          <SentimentCard />
+        <Grid item xs={12} sm={6} lg={4} sx={{ display: 'flex' }}>
+          <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', '& > *': { flexGrow: 1, height: '100%' } }}>
+            <SentimentCard />
+          </Box>
         </Grid>
 
-        <Grid item xs={12} md={6}>
-          <InsightCard />
+        <Grid item xs={12} sm={6} lg={4} sx={{ display: 'flex' }}>
+          <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', '& > *': { flexGrow: 1, height: '100%' } }}>
+            <InsightCard />
+          </Box>
         </Grid>
 
-        <Grid item xs={12} md={6}>
-          <CompetitorCard />
+        <Grid item xs={12} sm={6} lg={4} sx={{ display: 'flex' }}>
+          <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', '& > *': { flexGrow: 1, height: '100%' } }}>
+            <CompetitorCard />
+          </Box>
         </Grid>
         
-        <Grid item xs={12} md={6}>
-          <RetentionCard />
+        <Grid item xs={12} sm={6} lg={4} sx={{ display: 'flex' }}>
+          <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', '& > *': { flexGrow: 1, height: '100%' } }}>
+            <RetentionCard />
+          </Box>
         </Grid>
         
-        <Grid item xs={12} md={6}>
-          <DraftApproval />
+        <Grid item xs={12} sm={6} lg={4} sx={{ display: 'flex' }}>
+          <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', '& > *': { flexGrow: 1, height: '100%' } }}>
+            <DraftApproval />
+          </Box>
         </Grid>
       </Grid>
     </MainLayout>

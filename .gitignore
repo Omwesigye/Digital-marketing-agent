@@ -44,6 +44,7 @@ yarn-error.log*
 *.db
 data/raw/
 data/processed/
+data/cache/
 *.log
 runs/
 agentscope_workspace/

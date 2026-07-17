@@ -1,4 +1,30 @@
 {
-  "timestamp": "2026-06-25T15:59:37.925583",
-  "data": []
+  "timestamp": "2026-07-17T14:56:36.844168",
+  "data": [
+    {
+      "platform": "google_trends",
+      "topic": "pizza",
+      "trend_score": 0
+    },
+    {
+      "platform": "google_trends",
+      "topic": "burger",
+      "trend_score": 0
+    },
+    {
+      "platform": "google_trends",
+      "topic": "fast food",
+      "trend_score": 0
+    },
+    {
+      "platform": "google_trends",
+      "topic": "restaurant",
+      "trend_score": 75
+    },
+    {
+      "platform": "google_trends",
+      "topic": "delivery",
+      "trend_score": 29
+    }
+  ]
 }
